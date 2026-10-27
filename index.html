@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10172b">
+  <meta name="description" content="A thoughtful, structured workspace for evaluating startup ideas.">
+  <title>VentureScope — Startup Idea Validator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#" aria-label="VentureScope home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-copy"><strong>venture<span>scope</span></strong><small>IDEA INTELLIGENCE</small></span>
+      </a>
+
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="primary-nav">
+        <a class="nav-link active" href="#overview" data-nav="overview">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>
+          <span>Overview</span>
+        </a>
+        <a class="nav-link" href="#analyzer" data-nav="analyzer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4M11 7v8M7 11h8"/></svg>
+          <span>Idea analyzer</span><span class="nav-tag">NEW</span>
+        </a>
+        <a class="nav-link" href="#history" data-nav="history">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/><path d="M3 3v5h5m4-1v5l3 2"/></svg>
+          <span>Report history</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+      <div class="workspace-label">YOUR TOOLKIT</div>
+      <div class="toolkit-card">
+        <div class="toolkit-icon">✦</div>
+        <strong>Think like an investor</strong>
+        <p>Pressure-test the idea before you put capital behind it.</p>
+        <a href="#methodology">How scoring works <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="privacy-note"><span class="privacy-dot"></span><span>Your reports stay on this device</span></div>
+        <button class="profile-button" type="button" aria-label="Local workspace profile">
+          <span class="avatar">VS</span>
+          <span class="profile-text"><strong>Local workspace</strong><small>Personal edition</small></span>
+          <span class="profile-menu" aria-hidden="true">···</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="mobileMenuButton" aria-label="Open navigation" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="breadcrumb"><span>Workspace</span><span class="breadcrumb-slash">/</span><strong>Overview</strong></div>
+        <div class="topbar-actions">
+          <span class="local-status"><span class="status-pulse"></span> All changes saved</span>
+          <button class="icon-button theme-toggle" id="themeToggle" aria-label="Switch to light mode" title="Switch theme">
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.3A8.5 8.5 0 0 1 8.7 3.8 8.6 8.6 0 1 0 20.2 15.3Z"/></svg>
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+          </button>
+          <button class="button button-primary button-small" type="button" id="newAnalysisTop">
+            <span aria-hidden="true">＋</span> New analysis
+          </button>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="welcome-row">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> YOUR STARTUP COMMAND CENTER</div>
+            <h1>Make your next move<br><span class="gradient-text">with conviction.</span></h1>
+            <p class="page-intro">Turn a big idea into a sharper business hypothesis. Explore the signals, risks, and questions that matter.</p>
+          </div>
+          <div class="welcome-art" aria-hidden="true">
+            <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+            <div class="art-core"><span>V</span><i>✦</i></div>
+            <span class="art-spark spark-one">✦</span><span class="art-spark spark-two">✧</span>
+          </div>
+        </section>
+
+        <section class="metric-grid" aria-label="Workspace summary">
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-label">IDEAS ANALYZED</span><span class="metric-icon icon-violet">↗</span></div>
+            <div class="metric-value" id="totalAnalyses">0</div>
+            <div class="metric-foot"><span class="metric-neutral">In this workspace</span></div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-label">AVERAGE SCORE</span><span class="metric-icon icon-blue">◉</span></div>
+            <div class="metric-value"><span id="averageScore">—</span><small id="averageScoreSuffix"></small></div>
+            <div class="metric-foot"><span class="metric-neutral">Across saved reports</span></div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-label">TOP OPPORTUNITY</span><span class="metric-icon icon-green">✧</span></div>
+            <div class="metric-value metric-category" id="topCategory">Explore</div>
+            <div class="metric-foot"><span class="metric-neutral" id="topCategoryFoot">Run your first analysis</span></div>
+          </article>
+          <article class="metric-card metric-highlight">
+            <div class="metric-top"><span class="metric-label">YOUR NEXT STEP</span><span class="metric-icon icon-amber">✦</span></div>
+            <div class="metric-highlight-title">Validate with people.</div>
+            <div class="metric-foot"><span class="metric-neutral">Talk to 5 potential customers this week.</span></div>
+          </article>
+        </section>
+
+        <section class="analysis-panel panel" id="analyzer">
+          <div class="section-heading">
+            <div>
+              <div class="eyebrow"><span class="eyebrow-line"></span> THE IDEA LAB</div>
+              <h2>Let's pressure-test your idea</h2>
+              <p>Give us the context. Get a structured first-pass assessment in seconds.</p>
+            </div>
+            <div class="step-indicator"><span class="step-dot"></span> <span>01</span> Idea profile</div>
+          </div>
+
+          <form id="ideaForm" novalidate>
+            <div class="form-grid">
+              <label class="field">
+                <span class="field-label">Startup name <span class="optional">OPTIONAL</span></span>
+                <span class="input-wrap"><span class="input-prefix">✦</span><input id="startupName" name="startupName" maxlength="70" placeholder="e.g. Bloom Labs"></span>
+              </label>
+              <label class="field">
+                <span class="field-label">Founder name <span class="optional">OPTIONAL</span></span>
+                <span class="input-wrap"><span class="input-prefix">◎</span><input id="founderName" name="founderName" maxlength="70" placeholder="Your name"></span>
+              </label>
+              <label class="field field-wide">
+                <span class="field-label">Describe your idea <span class="required-mark">*</span></span>
+                <textarea id="ideaDescription" name="ideaDescription" rows="5" minlength="25" maxlength="1800" required placeholder="What are you building? Who is it for, what problem does it solve, and how is your approach different?"></textarea>
+                <span class="field-hint"><span id="descriptionCount">0</span>/1800 characters · More context creates a more useful assessment.</span>
+              </label>
+              <label class="field">
+                <span class="field-label">Industry category <span class="required-mark">*</span></span>
+                <select id="category" name="category" required>
+                  <option value="">Choose a category</option>
+                  <option>AI &amp; Machine Learning</option><option>Education</option><option>EdTech</option><option>Healthcare</option><option>HealthTech</option>
+                  <option>Finance</option><option>FinTech</option><option>E-Commerce</option><option>Agriculture</option><option>Travel</option>
+                  <option>Gaming</option><option>Entertainment</option><option>Fashion</option><option>Real Estate</option><option>SaaS</option>
+                  <option>Cyber Security</option><option>Logistics</option><option>Environment</option><option>Food &amp; Restaurant</option>
+                  <option>Blockchain</option><option>IoT</option><option>Automobile</option><option>Social Media</option><option>Fitness</option>
+                  <option>Business Services</option><option>Other</option>
+                </select>
+              </label>
+              <label class="field">
+                <span class="field-label">Target audience <span class="required-mark">*</span></span>
+                <input id="targetAudience" name="targetAudience" required maxlength="160" placeholder="e.g. Independent fitness coaches">
+              </label>
+              <label class="field">
+                <span class="field-label">Estimated starting budget <span class="optional">OPTIONAL</span></span>
+                <span class="input-wrap"><span class="input-prefix">$</span><input id="estimatedBudget" name="estimatedBudget" type="number" min="0" max="1000000000" step="1000" placeholder="e.g. 50000"></span>
+              </label>
+              <label class="field">
+                <span class="field-label">Technology used <span class="optional">OPTIONAL</span></span>
+                <input id="technology" name="technology" maxlength="180" placeholder="e.g. React, machine learning, mobile app">
+              </label>
+              <label class="field field-wide">
+                <span class="field-label">Initial target market <span class="required-mark">*</span></span>
+                <input id="targetMarket" name="targetMarket" required maxlength="160" placeholder="e.g. English-speaking urban markets, starting in Canada">
+              </label>
+            </div>
+            <div class="form-bottom">
+              <p class="form-disclaimer"><span aria-hidden="true">ⓘ</span> This is a decision-support heuristic, not financial or market research advice.</p>
+              <button class="button button-primary analyze-button" id="analyzeButton" type="submit">
+                <span class="button-label">Generate my assessment</span><span class="button-arrow" aria-hidden="true">→</span>
+                <span class="button-spinner" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="form-error" id="formError" role="alert" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <section class="results-section hidden" id="resultsSection" aria-live="polite">
+          <div class="results-heading">
+            <div>
+              <div class="eyebrow"><span class="eyebrow-line"></span> YOUR VALIDATION BRIEF</div>
+              <h2 id="reportTitle">Startup assessment</h2>
+              <p id="reportSubtitle">A structured first-pass view of your business hypothesis.</p>
+            </div>
+            <div class="report-actions">
+              <button class="button button-secondary" id="printReport" type="button"><span aria-hidden="true">⎙</span> Print</button>
+              <button class="button button-secondary" id="downloadPdf" type="button"><span aria-hidden="true">↓</span> Download PDF</button>
+              <button class="button button-primary" id="exportJson" type="button"><span aria-hidden="true">↗</span> Export data</button>
+            </div>
+          </div>
+
+          <div class="report-note"><span class="note-icon">i</span><span><strong>Directional assessment, not a prediction.</strong> Scores are generated from your inputs using transparent heuristics. Verify every assumption with customer interviews and reliable market data.</span></div>
+
+          <div class="score-overview">
+            <article class="score-card main-score-card">
+              <div class="score-ring" id="scoreRing"><div><strong id="overallScore">0</strong><span>OUT OF 100</span></div></div>
+              <div class="main-score-copy"><span class="score-kicker">VENTURESCOPE SCORE</span><h3 id="scoreVerdict">Early signal</h3><p id="scoreSummary"></p></div>
+              <div class="score-confidence"><span>ASSESSMENT CONFIDENCE</span><strong id="confidenceValue">—</strong><div class="confidence-track"><i id="confidenceBar"></i></div><small>Based on the detail provided</small></div>
+            </article>
+            <article class="score-card score-stat">
+              <div class="score-stat-icon icon-violet">↗</div><span class="score-kicker">SUCCESS SIGNAL</span><strong class="stat-number" id="successProbability">—</strong><span class="stat-unit">heuristic indicator</span><div class="mini-track"><i id="successBar"></i></div><p>Not a forecast or guarantee of success.</p>
+            </article>
+            <article class="score-card score-stat">
+              <div class="score-stat-icon icon-blue">◈</div><span class="score-kicker">INVESTMENT READINESS</span><strong class="stat-number" id="investmentScore">—</strong><span class="stat-unit">out of 100</span><div class="mini-track"><i id="investmentBar"></i></div><p id="fundingStage">Build evidence before fundraising.</p>
+            </article>
+          </div>
+
+          <div class="report-grid">
+            <article class="panel report-panel chart-panel">
+              <div class="panel-heading"><div><h3>Startup scorecard</h3><p>How the core signals stack up</p></div><span class="heading-mark">01</span></div>
+              <div class="chart-container"><canvas id="scoreChart" role="img" aria-label="Bar chart showing startup assessment scores"></canvas></div>
+            </article>
+            <article class="panel report-panel">
+              <div class="panel-heading"><div><h3>Market &amp; momentum</h3><p>Directional opportunity indicators</p></div><span class="heading-mark">02</span></div>
+              <div class="market-metrics" id="marketMetrics"></div>
+            </article>
+            <article class="panel report-panel chart-panel">
+              <div class="panel-heading"><div><h3>SWOT snapshot</h3><p>Relative emphasis in this assessment</p></div><span class="heading-mark">03</span></div>
+              <div class="chart-container chart-container-small"><canvas id="swotChart" role="img" aria-label="Pie chart showing SWOT assessment balance"></canvas></div>
+              <div class="swot-legend"><span><i class="swot-dot dot-strength"></i>Strengths</span><span><i class="swot-dot dot-weakness"></i>Weaknesses</span><span><i class="swot-dot dot-opportunity"></i>Opportunities</span><span><i class="swot-dot dot-threat"></i>Threats</span></div>
+            </article>
+            <article class="panel report-panel chart-panel">
+              <div class="panel-heading"><div><h3>Market potential</h3><p>Opportunity dimensions, scored 0–100</p></div><span class="heading-mark">04</span></div>
+              <div class="chart-container"><canvas id="marketChart" role="img" aria-label="Radar chart showing market potential"></canvas></div>
+            </article>
+          </div>
+
+          <div class="report-grid report-grid-equal">
+            <article class="panel report-panel chart-panel">
+              <div class="panel-heading"><div><h3>Revenue potential</h3><p>Illustrative index by model — not revenue projections</p></div><span class="heading-mark">05</span></div>
+              <div class="chart-container"><canvas id="revenueChart" role="img" aria-label="Bar chart comparing revenue model fit"></canvas></div>
+              <div class="chart-caption">Relative fit is inferred from your category and idea description. Validate pricing with customers.</div>
+            </article>
+            <article class="panel report-panel chart-panel">
+              <div class="panel-heading"><div><h3>Risk profile</h3><p>Areas to investigate before scaling</p></div><span class="heading-mark">06</span></div>
+              <div class="chart-container"><canvas id="riskChart" role="img" aria-label="Bar chart showing business risk dimensions"></canvas></div>
+            </article>
+          </div>
+
+          <div class="report-grid report-grid-equal">
+            <article class="panel report-panel">
+              <div class="panel-heading"><div><h3>Market demand analysis</h3><p>Signals and validation questions</p></div><span class="heading-mark">07</span></div>
+              <div id="demandAnalysis" class="insight-content"></div>
+            </article>
+            <article class="panel report-panel">
+              <div class="panel-heading"><div><h3>Scalability &amp; growth</h3><p>What could compound — and what may constrain it</p></div><span class="heading-mark">08</span></div>
+              <div id="scalabilityAnalysis" class="insight-content"></div>
+            </article>
+          </div>
+
+          <article class="panel report-panel">
+            <div class="panel-heading"><div><h3>SWOT analysis</h3><p>Internal capabilities and external market forces to test</p></div><span class="heading-mark">09</span></div>
+            <div class="swot-grid">
+              <div class="swot-card swot-strength"><div class="swot-title"><span>＋</span> Strengths</div><ul id="strengthsList"></ul></div>
+              <div class="swot-card swot-weakness"><div class="swot-title"><span>−</span> Weaknesses</div><ul id="weaknessesList"></ul></div>
+              <div class="swot-card swot-opportunity"><div class="swot-title"><span>↗</span> Opportunities</div><ul id="opportunitiesList"></ul></div>
+              <div class="swot-card swot-threat"><div class="swot-title"><span>!</span> Threats</div><ul id="threatsList"></ul></div>
+            </div>
+          </article>
+
+          <div class="report-grid report-grid-equal">
+            <article class="panel report-panel">
+              <div class="panel-heading"><div><h3>Advantages &amp; trade-offs</h3><p>Balanced considerations for your next decision</p></div><span class="heading-mark">10</span></div>
+              <div class="pros-cons-grid">
+                <div><h4 class="list-heading pros-heading"><span>↗</span> Potential advantages</h4><ul class="plain-list pros-list" id="prosList"></ul></div>
+                <div><h4 class="list-heading cons-heading"><span>↘</span> Real challenges</h4><ul class="plain-list cons-list" id="consList"></ul></div>
+              </div>
+            </article>
+            <article class="panel report-panel">
+              <div class="panel-heading"><div><h3>Target audience profile</h3><p>Who you might serve first</p></div><span class="heading-mark">11</span></div>
+              <div id="audienceAnalysis" class="audience-content"></div>
+            </article>
+          </div>
+
+          <div class="report-grid report-grid-equal">
+            <article class="panel report-panel">
+              <div class="panel-heading"><div><h3>Competitor landscape</h3><p>Illustrative companies to research — not a live competitor search</p></div><span class="heading-mark">12</span></div>
+              <div id="competitorAnalysis" class="insight-content"></div>
+            </article>
+            <article class="panel report-panel">
+              <div class="panel-heading"><div><h3>Revenue model options</h3><p>Possible paths to sustainable revenue</p></div><span class="heading-mark">13</span></div>
+              <div id="revenueModels" class="revenue-model-list"></div>
+            </article>
+          </div>
+
+          <article class="panel report-panel">
+            <div class="panel-heading"><div><h3>Investor perspective</h3><p>Questions a thoughtful investor may ask</p></div><span class="heading-mark">14</span></div>
+            <div class="investor-grid">
+              <div class="investor-column"><h4><span class="investor-check">✓</span> Why investors may lean in</h4><ul class="plain-list" id="investorReasons"></ul></div>
+              <div class="investor-column investor-caution"><h4><span class="investor-alert">!</span> What they may challenge</h4><ul class="plain-list" id="investorConcerns"></ul></div>
+              <div class="funding-readiness"><span>FUNDING READINESS</span><strong id="investorReadiness">—</strong><div class="mini-track"><i id="investorBar"></i></div><p id="investorStageText"></p></div>
+            </div>
+          </article>
+
+          <article class="panel report-panel suggestions-panel">
+            <div class="panel-heading"><div><h3>15 ways to strengthen the idea</h3><p>Practical experiments and product moves — prioritize, don't boil the ocean</p></div><span class="heading-mark">15</span></div>
+            <div class="suggestion-grid" id="suggestionsList"></div>
+          </article>
+
+          <article class="panel report-panel roadmap-panel">
+            <div class="panel-heading"><div><h3>A considered path forward</h3><p>Milestone-based roadmap — progress when evidence supports it</p></div><span class="heading-mark">16</span></div>
+            <div class="roadmap" id="roadmap"></div>
+          </article>
+
+          <article class="panel report-panel">
+            <div class="panel-heading"><div><h3>Revenue fit by model</h3><p>Relative fit across common monetization routes</p></div><span class="heading-mark">17</span></div>
+            <div class="revenue-fit-grid" id="revenueFit"></div>
+          </article>
+
+          <article class="panel report-panel methodology-panel" id="methodology">
+            <div class="methodology-icon">ⓘ</div>
+            <div><h3>How to use this report</h3><p>VentureScope applies transparent, rule-based heuristics to the information you supplied. It does not retrieve live market data, identify verified competitors, predict success, or replace customer discovery, legal advice, or financial diligence. Competitor examples are research starting points, not confirmed direct competitors. Treat every score as a prompt for investigation—not a decision on its own.</p></div>
+          </article>
+        </section>
+
+        <section class="bottom-grid" id="history">
+          <article class="panel history-panel">
+            <div class="section-heading compact-heading">
+              <div><div class="eyebrow"><span class="eyebrow-line"></span> SAVED LOCALLY</div><h2>Recent reports</h2><p>Your analyses, stored privately in this browser.</p></div>
+              <button class="text-button" id="clearHistory" type="button">Clear history</button>
+            </div>
+            <div class="history-list" id="historyList">
+              <div class="empty-state"><div class="empty-icon">◷</div><strong>No reports yet</strong><span>Run an assessment to see it here.</span></div>
+            </div>
+          </article>
+          <aside class="panel prompt-panel">
+            <div class="prompt-orb" aria-hidden="true">✦</div>
+            <div class="eyebrow">A BETTER FIRST QUESTION</div>
+            <h3>Are you solving a problem people will pay to make disappear?</h3>
+            <p>Before you build, ask five people who experience the problem what they do about it today.</p>
+            <a href="#analyzer" class="prompt-link">Refine your idea <span aria-hidden="true">→</span></a>
+          </aside>
+        </section>
+
+        <footer class="page-footer"><span>VENTURESCOPE <span class="footer-dot">·</span> IDEA INTELLIGENCE</span><span>Built for better questions, not easy answers.</span></footer>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <div class="loading-overlay hidden" id="loadingOverlay" aria-hidden="true">
+    <div class="loading-card"><div class="loading-animation"><span></span><span></span><span></span></div><strong>Thinking through your idea</strong><p id="loadingMessage">Mapping the opportunity landscape…</p><div class="loading-track"><i></i></div></div>
+  </div>
+</body>
+</html>
